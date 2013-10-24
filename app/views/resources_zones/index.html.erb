@@ -1,0 +1,53 @@
+<div class="row-fluid">
+  <div class="span2"><%= render :partial => 'partials/taskbar', :locals => { :models => [ 'resources' ] }%></div>
+  <div class="span10">
+    <%= render :partial => 'partials/alerts' %>
+    <div class="section_content" style="margin-left: -15px;"><br>
+      <!-- FILTERS -->
+      <%= form_tag resources_zones_path, :method => 'get', :class => 'form-search' do %>
+        <%= select_tag :resources_types_id, options_for_select(@resources_types, params[:resources_types_id]), { :prompt => "Tipo de recurso", :class => 'span3'} %>
+        <%= select_tag :emergencies_types_id, options_for_select(@emergencies_types, params[:resources_types_id]), { :prompt => "Tipo de emergencia", :class => 'span3'} %>
+        <%= select_tag :zone_id, options_for_select(@zones, params[:resources_types_id]), { :prompt => "Zona", :class => 'span2'} %>
+        <%= text_field_tag :serial, params[:serial], :placeholder => "Serial", :class => 'span2'  %>
+        <%= submit_tag "Buscar", :name => nil , :class => 'btn margin_top_5' %>
+      <% end %>
+      <% if !@resources_zones.blank? %>
+        <table  class="table-hover">
+          <tr>
+            <th>Tipo de recurso</th>
+            <th>Serial</th>
+            <th>Zona</th>
+            <th>Tipo de emergencia</th>
+            <th></th>
+          </tr>
+        <% @resources_zones.each do |resources_zone| %>
+          <tr>
+            <td><%= resources_zone.resource.resources_type_name %></td>
+            <td><%= resources_zone.resource.serial %></td>
+            <td><%= resources_zone.zone.name %></td>
+            <td><%= resources_zone.emergencies_type_name %></td>
+            <td>
+              <!-- VIEW -->
+              <%= link_to resources_zone_path(resources_zone)  do %>
+                <input value="Ver"  class ="btn btn-small btn-success" type="button">
+              <% end %>
+              <!-- EDIT -->
+              <%= link_to edit_resources_zone_path(resources_zone),  do %>
+                <input value="Editar"  class ="btn btn-small btn-warning" type="button">
+              <% end %>
+              <!-- DELETE -->
+              <%= link_to resources_zone, :confirm => "¿Esta seguro de eliminar el recurso de la zona?", :method => :delete do %>
+                <input value="Eliminar"  class ="btn btn-small btn-danger" type="button">
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        </table>
+      <% else %>
+        <div>
+          <h2 class="no_results">No se encontraron recursos disponibles</h2>
+        </div>
+      <% end %>
+      <br />
+  </div>
+</div>

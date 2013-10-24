@@ -1,0 +1,12 @@
+<ul class="nav nav-list section_content" style="min-width: 130px; margin-left: 0px;">
+<% if !models.blank? %>
+	<% sections_counter = 0 %>
+	<% models.each do |model|%>
+		<%= render :partial => "partials/taskbar/#{model}" %>
+		<% sections_counter += 1 %>
+		<% if sections_counter < models.count %>
+			<div class="section_delimiter"></div>				
+		<% end  %>
+	<% end%>
+<% end  %>
+</ul>

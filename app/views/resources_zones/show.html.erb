@@ -1,0 +1,30 @@
+<div class="row-fluid">
+  <div class="span2"><%= render :partial => 'partials/taskbar', :locals => { :models => [ 'resources' ] }%></div>
+  <div class="span10">
+  <%= render :partial => 'partials/alerts' %>
+    <div class="section_content" style="margin-left: -15px;"><br>
+      <table class="display_table">
+        <!-- RESOURCE TYPE -->
+        <tr>
+          <td class="align_right"><label>Tipo de recurso:</label></td>
+          <td><%= @resources_zone.resource.resources_type_name %></td>
+        </tr>
+        <!-- ZONE -->
+        <tr>
+          <td class="align_right"><label>Zona:</label></td>
+          <td><%= @resources_zone.zone.name %></td>
+        </tr>
+        <!-- SERIAL -->
+        <tr>
+          <td class="align_right"><label>Serial:</label></td>
+          <td><%= @resources_zone.resource.serial %></td>
+        </tr>
+	      <!-- EMERGENCY TYPE -->
+	      <tr>
+	        <td class="align_right"><label>Fecha de vencimiento:</label></td>
+	        <td><%= @resources_zone.emergencies_type_name %></td>
+	      </tr>
+      </table>
+    </div>
+  </div>
+</div>

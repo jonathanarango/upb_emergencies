@@ -1,0 +1,51 @@
+<div class="row-fluid">
+  <div class="span2"><%= render :partial => 'partials/taskbar', :locals => { :models => [ 'resources' ] }%></div>
+  <div class="span10">
+    <%= render :partial => 'partials/alerts' %>
+    <% if @resources_zone.errors.any? %>
+          <div class="alert alert-error" >
+          	<a class="close" data-dismiss="alert">×</a> 
+            <ul>
+	            <% @resources_zone.errors.full_messages.each do |msg| %>
+	              <li><%= msg %></li>
+	            <% end %>
+            </ul>
+          </div>
+        <% end %>
+    <div class="section_content" style="margin-left: -15px;"><br>
+      <%= form_for(@resources_zone, :html => { :class => "form-horizontal"} ) do |f| %>
+          <!-- RESOURCE TYPE -->
+          <div class="control-group">
+            <%= f.label "Tipo de recurso", :class => "control-label"  %>
+            <div class="controls">
+             <div id="div_resources_select">
+                <%= render :partial => 'partials/resources_zones/load_resources' %>
+              </div>
+            </div>
+          </div>
+          <!-- ZONE -->
+          <div class="control-group">
+            <%= f.label "Zona", :class => "control-label"  %>
+            <div class="controls">
+              <%= f.select :zone_id, @zones %>
+            </div>
+          </div>
+          <!-- EMERGENCY TYPE -->
+          <div class="control-group">
+            <%= f.label "Tipo de emergencia", :class => "control-label"  %>
+            <div class="controls">
+              <%= f.select :emergencies_types_id, @emergencies_types %>
+            </div>
+          </div>
+          <!-- BUTTONS -->
+          <div class="control-group">
+            <div class="controls">
+               <%= f.submit "Guardar", :disable_with => "Guardando...", :class => "btn btn-primary" %>
+            <input value="Cancelar" onclick="window.location='<%= resources_path %>';" class ="btn btn-inverse" type="button">
+            </div>
+          </div>
+        <% end %>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>

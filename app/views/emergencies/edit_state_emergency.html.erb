@@ -1,0 +1,78 @@
+<%= create_tooltip("#edit, #delete") %>
+<div class="row-fluid">
+  <div class="span12">
+  <%= render :partial => 'partials/alerts' %>
+    <div class="section_content" style="margin-left: -8px; margin-right: -6px;"><br>
+      <table class="display_table">
+        <!-- EMERGENCY TIPE -->
+          <tr>
+            <td class="align_right"><label>Tipo de emergencia:</label></td>
+            <td><%= @emergency.emergency_type.name %></td>
+          </tr>
+          <%= form_for(@emergency, :html => { :class => "form-horizontal"} ) do |f| %>
+            <!-- ESTADO -->
+            <tr>
+              <td class="align_right"><label>Estado:</label></td>
+              <td>
+                <%= f.select :status, get_status%>
+              </td>
+            </tr>
+            <!-- FECHA REGISTRO -->
+            <tr>
+              <td class="align_right"><label>Fecha de registro:</label></td>
+              <td><%= l(@emergency.created_at, :format => '%d/%m/%Y - %H:%M') %></td>
+            </tr>
+             <!-- FECHA REVISIÓN -->
+             <% if !@emergency.revised_date.blank? %>
+              <tr>
+                <td class="align_right"><label>Fecha de revisión:</label></td>
+                <td><%= l(@emergency.created_at, :format => '%d/%m/%Y - %H:%M') %></td>
+              </tr>
+            <% end %>
+             <!-- FECHA REPORTE -->
+             <% if !@emergency.reported_date.blank? %>
+              <tr>
+                <td class="align_right"><label>Fecha de reporte:</label></td>
+                <td><%= l(@emergency.created_at, :format => '%d/%m/%Y - %H:%M') %></td>
+              </tr>
+            <% end %>
+            <!-- DESCRIPCION -->
+            <tr>
+              <td class="align_right"><label>Descripción:</label></td>
+              <td><%= @emergency.description %></td>
+            </tr>
+            <% neighborhood = Neighborhood.find(@emergency.neighborhood_id) %>
+            <% city = City.find(neighborhood.city_id) %>
+            <!-- CIUDAD -->
+            <tr>
+              <td class="align_right"><label>Ciudad:</label></td>
+              <td><%= city.name %></td>
+            </tr>
+            <!-- BARRIO -->
+            <tr>
+              <td class="align_right"><label>Barrio:</label></td>
+              <td><%= neighborhood.name %></td>
+            </tr>
+            <!-- DESCRIPSION LOCALIZACION -->
+            <tr>
+              <td class="align_right"><label>Dirección o ubicación:</label></td>
+              <td><%= @emergency.location_description %></td>
+            </tr>
+            <!--  CODIGO -->
+            <tr>
+              <td class="align_right"><label>Código:</label></td>
+              <td><%= @emergency.code %></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>
+                <%= f.submit "Guardar", :disable_with => "Guardando...", :class => "btn btn-primary" %>
+              </td>
+            </tr>
+          <% end %>
+        <tr>
+      </table>
+    </div>
+  </div>
+</div>
+

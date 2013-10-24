@@ -1,0 +1,64 @@
+<div class="row-fluid">
+  <div class="span12">
+  	<%= render :partial => 'partials/alerts' %>
+    <div class="section_content" style="margin-left: -8px; margin-top: -18px; margin-right: -6px;"><br>
+     <!-- FILTERS -->
+      <%= form_tag reported_emergency_path, :method => 'get', :class => 'form-search' do %>
+      <%= hidden_field_tag(:actual, @actual) %>
+        <%= text_field_tag :code, params[:code], :class=>"span2", :placeholder => "Código" %>
+        <%= submit_tag "Buscar", :name => nil , :class => 'btn margin_top_5' %>
+        <input type="button" value="Limpiar" onclick="window.location.href = '<%= reported_emergency_path %>'" class="btn btn-inverse" />
+      <% end %>
+    	<% if !@emergency.blank? and !params[:code].blank? %>
+				 <table class="display_table">
+          <!-- EMERGENCY TIPE -->
+          <tr>
+            <td class="align_right"><label>Tipo de emergencia:</label></td>
+            <td><%= @emergency.emergency_type.name %></td>
+          </tr>
+          <!-- ESTADO -->
+          <tr>
+            <td class="align_right"><label>Estado:</label></td>
+            <td><%= get_emergency_status(@emergency.status) %></td>
+          </tr>
+          <!-- FECHA CREACION -->
+          <tr>
+            <td class="align_right"><label>Fecha de creación:</label></td>
+            <td><%= l(@emergency.created_at, :format => '%d/%m/%Y - %H:%M') %></td>
+          </tr>
+          <!-- DESCRIPCION -->
+          <tr>
+            <td class="align_right"><label>Descripción:</label></td>
+            <td><%= @emergency.description %></td>
+          </tr>
+          <% neighborhood = Neighborhood.find(@emergency.neighborhood_id) %>
+          <% city = City.find(neighborhood.city_id) %>
+          <!-- CIUDAD -->
+          <tr>
+            <td class="align_right"><label>Ciudad:</label></td>
+            <td><%= city.name %></td>
+          </tr>
+          <!-- BARRIO -->
+          <tr>
+            <td class="align_right"><label>Barrio:</label></td>
+            <td><%= neighborhood.name %></td>
+          </tr>
+          <!-- DESCRIPSION LOCALIZACION -->
+          <tr>
+            <td class="align_right"><label>Dirección o ubicación:</label></td>
+            <td><%= @emergency.location_description %></td>
+          </tr>
+          <!--  CODIGO -->
+          <tr>
+            <td class="align_right"><label>Código:</label></td>
+            <td><%= @emergency.code %></td>
+          </tr>
+        </table>
+      <% elsif !params[:code].blank?%>
+        <div>
+          <h2 class="no_results">No se encontraron emergencias</h2>
+        </div>
+			<% end %>
+			<br />
+	</div>
+</div>

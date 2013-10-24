@@ -1,0 +1,6 @@
+es:
+  activerecord:
+   errors:
+    template:
+     body: ""
+     header: ""

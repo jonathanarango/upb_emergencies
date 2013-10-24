@@ -1,0 +1,70 @@
+<script type="text/javascript">
+	$('document').ready(function(){
+		$('#da-slider').cslider({
+		    current: 0,    
+		    // index of current slide
+		     
+		    bgincrement : 50,   
+		    // increment the background position 
+		    // (parallax effect) when sliding
+		     
+		    autoplay: true,
+		    // slideshow on / off
+		     
+		    interval: 4000
+		    // time between transitions
+		     
+		});
+	});
+</script>
+<%= render :partial => 'partials/alerts' %>
+<div class="row-fluid">
+  <div class="span12">
+    <div class="section_content" style="margin-left: -5px; margin-top: -15px;"><br>
+  		<div style="background-color: #6EBE5E; width: 94%; margin-left: 2%; margin-right: 7%; padding: 20px 20px 20px 20px;">
+  			<div  class="float_left" style="background-color: #086404; width: 75%; margin-right: 35px; padding: 2px 2px 2px 2px;">
+					<div id="da-slider" class="da-slider" style="margin: 0px; height: 340px;">
+				    <div class="da-slide">
+				      <p style="text-align: center;">Automatización de los informes de emergencias.</p>
+				      <div class="da-img">
+				          <img src="/assets/1.jpg" />
+				      </div>
+				    </div>
+				    <div class="da-slide">
+				      <p style="text-align: center;">Gestión de la información perteneciente a las emergencias.</p>
+				      <div class="da-img">
+				          <img src="/assets/2.jpg" />
+				      </div>
+				    </div>
+				    <div class="da-slide">
+				      <p style="text-align: center;">Monitoreo continuo de las emergencias y su estado.</p>
+				      <div class="da-img">
+				          <img src="/assets/3.jpg" style="max-height: 250px;" />
+				      </div>
+				    </div>
+
+				    <nav class="da-arrows">
+				        <span class="da-arrows-prev"></span>
+				        <span class="da-arrows-next"></span>
+				    </nav>
+					</div>
+  			</div>
+  			<div class="float_left" style="background-color: #086404; width: 18%; padding: 5px 5px 5px 5px;">
+  			<p style="font-size: 11.5px; color: white;">
+  			<br>
+  				•	Automatización de los informes de emergencias<br><br>
+				•	Agilización del proceso de atención de emergencias<br><br>
+				•	Gestión de la información perteneciente a las emergencias<br><br>
+				•	Aseguramiento de presencia de personal capacitado para cada tipo de emergencia<br><br>
+				•	Monitoreo continuo de las emergencias y su estado<br>
+				</p>
+  			</div>
+  			<div class="clear"></div>
+  		</div>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+
+
+

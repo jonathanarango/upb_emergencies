@@ -1,0 +1,13 @@
+<li>
+	<div style="margin-top: 2px;">
+	 <%= image_tag 'logo.png', :size => "87x87"%>
+	</div>
+</li>
+<li style="padding-left: 17px;" class="<%= controller.controller_name == 'dashboard' ? 'active' : '' %>">
+	 <a href="<%= dashboard_index_path %>">Tablero de control</a>
+</li>
+<!-- EMERGENCIES -->
+<li class="<%= ((controller.action_name == 'index' or controller.action_name == 'show' or controller.action_name == 'edit' or controller.action_name == 'edit_state_emergency') and controller.controller_name == 'emergencies') ? 'active' : '' %>"><a href="<%= emergencies_path %>">Emergencias reportadas</a>
+</li>
+<!-- MY ACCOUNT -->
+<li class="<%= ['system_users', 'emergencies_users'].index(controller.controller_name) != nil ? 'active' : '' %>"><a href="<%= system_user_path(current_system_user, :my_self_user => true) %>">Mi cuenta</a></li>

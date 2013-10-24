@@ -1,0 +1,136 @@
+<script type="text/javascript">
+
+  function show_datapickers()
+  { 
+    date_id = $('#filter_kind').val();  
+    if (date_id == 1){
+      $('#datepicker_specific_date').show();
+      $('#datepicker_interval').hide();
+    }else{
+      if (date_id == 2){
+        $('#datepicker_interval').show();
+        $('#datepicker_specific_date').hide();
+      }else{
+        $('#datepicker_interval').hide();
+        $('#datepicker_specific_date').hide();
+      }
+      
+    }
+  }
+
+  $(function(){
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0);
+    var checkin = $('#deadline').datepicker({
+      onRender: function(date) {
+        return date.valueOf();
+      }
+    }).on('changeDate', function(ev) {
+      checkin.hide();
+    }).data('datepicker');
+  })
+
+  $(function(){
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var checkin = $('#start_date').datepicker({
+      format: 'dd/mm/yyyy',
+      onRender: function(date) {
+        return date.valueOf();
+      }
+    }).on('changeDate', function(ev) {
+        var newDate = new Date(ev.date)
+        newDate.setDate(newDate.getDate() + 1);
+        checkout.setValue(newDate);
+      checkin.hide();
+      checkout.show();
+      $('#end_date')[0].focus();
+    }).data('datepicker');
+    var checkout = $('#end_date').datepicker({
+      format: 'dd/mm/yyyy',
+      onRender: function(date) {
+        return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+      }
+    }).on('changeDate', function(ev) {
+      checkout.hide();
+    }).data('datepicker');
+  })
+
+</script>
+<div class="row-fluid">
+  <div class="span2"><%= render :partial => 'partials/taskbar', :locals => { :models => [ 'resources' ] }%></div>
+  <div class="span10">
+    <%= render :partial => 'partials/alerts' %>
+    <div class="section_content" style="margin-left: -15px;"><br>
+      <!-- FILTERS -->
+      <%= form_tag resources_path, :method => 'get', :class => 'form-search' do %>
+        <%= select_tag :resources_types_id, options_for_select(@resources_types, params[:resources_types_id]), { :prompt => "Tipo de recurso", :class => 'span3'} %>
+        <%= select_tag :status, options_for_select(Resource.status_options, params[:resources_types_id]), { :prompt => "Estado", :class => 'span2'} %>
+        <%= text_field_tag :serial, params[:serial], :placeholder => "Serial", :class => 'span2'  %>
+        <%= select_tag :filter_kind, options_for_select(get_resources_expiration_date_options, params[:filter_kind]), { :prompt => "Fecha de vencimiento", :class => 'span3', :onchange => 'show_datapickers();' }%>
+        <!--  SPECIFIC DATE -->
+        <div style="margin-top: 10px; margin-bottom: 10px;" id="datepicker_specific_date" class="<%= (!params[:expiration_date].blank? and params[:filter_kind] == "#{Resource::DATE[:specific_day]}") ? "" : "hide" %>">
+          <div class="input-append date" id="deadline" data-date=<%= Date.today.strftime('%d/%m/%Y') %> data-date-format="dd/mm/yyyy">
+            <%= text_field_tag :expiration_date, params[:expiration_date], :placeholder => "Fecha inicial", :class => 'span6', :readonly=> true %>
+              <span class="add-on"><i class="icon-th"></i></span>
+          </div>
+        </div>
+        <!-- INTERVAL -->
+        <div style="margin-top: 10px; margin-bottom: 10px;" id="datepicker_interval" class="<%= (!params[:start_date].blank? and params[:filter_kind] == "#{Resource::DATE[:interval]}") ? "" : "hide" %>" >
+          <div class="input-append date" id="start_date" data-date=<%= Date.today.strftime('%d/%m/%Y') %> data-date-format="dd/mm/yyyy">
+            <%= text_field_tag :start_date, params[:start_date], :placeholder => "Fecha inicial", :class => 'span6', :readonly=> true %>
+            <span class="add-on"><i class="icon-th"></i></span>
+          </div>
+          <!-- END DATE -->
+          <div class="input-append date margin_left_minus_72" style="width: 190px !important;" id="end_date" data-date=<%= Date.today.strftime('%d/%m/%Y') %> data-date-format="dd/mm/yyyy">
+            <%= text_field_tag :end_date, params[:end_date], :placeholder => "Fecha final", :class => 'span6', :readonly=> true %>
+            <span class="add-on"><i class="icon-th"></i></span>
+          </div>
+        </div>
+        <%= submit_tag "Buscar", :name => nil , :class => 'btn margin_top_5' %>
+      <% end %>
+      <% if !@resources.blank? %>
+        <table  class="table-hover">
+          <tr>
+            <th>Tipo de recurso</th>
+            <th>Estado</th>
+            <th>Serial</th>
+            <th>Fecha de vencimiento</th>
+            <th></th>
+          </tr>
+        <% @resources.each do |resource| %>
+          <tr>
+            <% @resources_type_name = ResourcesType.find(resource.resources_types_id) %>
+            <td><%= @resources_type_name.name %></td>
+            <td><%= get_resource_status(resource.status) %></td>
+            <td><%= resource.serial %></td>
+            <td>
+              <% if !resource.expiration_date.blank? %>
+                <%= l( resource.expiration_date, :format=> '%d/%m/%Y') %>
+              <% end %>
+            </td>
+            <td>
+              <!-- VIEW -->
+              <%= link_to resource_path(resource)  do %>
+                <input value="Ver"  class ="btn btn-small btn-success" type="button">
+              <% end %>
+              <!-- EDIT -->
+              <%= link_to edit_resource_path(resource),  do %>
+                <input value="Editar"  class ="btn btn-small btn-warning" type="button">
+              <% end %>
+              <!-- DELETE -->
+              <%= link_to resource, :confirm => "¿Esta seguro de eliminar el recurso?", :method => :delete do %>
+                <input value="Eliminar"  class ="btn btn-small btn-danger" type="button">
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        </table>
+      <% else %>
+        <div>
+          <h2 class="no_results">No se encontraron recursos disponibles</h2>
+        </div>
+      <% end %>
+      <br />
+  </div>
+</div>

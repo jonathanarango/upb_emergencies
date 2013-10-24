@@ -1,0 +1,80 @@
+<script type="text/javascript">
+
+function show_chart_by_emergency_type()
+{
+	$('document').ready(function(){
+		if ($("#check_box_by_emergency_type").prop('checked')){
+			$('#chart_by_emergency_type').attr('style','display: show;');
+			$('#chart_by_status').attr('style','display: none;');
+			$("#check_box_by_status").attr('checked',false);
+			$('#chart_by_neighborhood').attr('style','display: none;');
+			$("#check_box_by_neighborhood").prop('checked',false);
+		}else{
+			$('#chart_by_emergency_type').attr('style','display: none;');
+		}
+	});
+}
+
+function show_chart_by_neighborhood()
+{
+	$('document').ready(function(){
+		if ($("#check_box_by_neighborhood").prop('checked')){
+			$('#chart_by_neighborhood').attr('style','display: show;');
+			$('#chart_by_status').attr('style','display: none;');
+			$("#check_box_by_status").attr('checked',false);
+			$('#chart_by_emergency_type').attr('style','display: none;');
+			$("#check_box_by_emergency_type").attr('checked',false);
+		}else{
+			$('#chart_by_neighborhood').attr('style','display: none;');
+		}
+	});
+}
+
+function show_chart_by_status()
+{
+	$('document').ready(function(){
+		if ($("#check_box_by_status").prop('checked')){
+			$('#chart_by_status').attr('style','display: show;');
+			$('#chart_by_emergency_type').attr('style','display: none;');
+			$('#chart_by_neighborhood').attr('style','display: none;');
+			$("#check_box_by_emergency_type").attr('checked',false);
+			$("#check_box_by_neighborhood").attr('checked',false);
+		}else{
+			$('#chart_by_status').attr('style','display: none;');
+		}
+	});
+}
+
+</script>
+<%= render :partial => 'partials/alerts' %>
+<div class="section_content" style="margin-left: -8px; margin-right: -6px;">
+		<h5>Reportes</h5>		
+		<hr>
+		<div class="float_left" style="padding-right: 50px;">
+			<div style="margin-bottom: 10px;">
+				Graficar emergencia por
+			</div>
+			<div>
+				<%= check_box_tag "check_box_by_neighborhood", nil, nil, :onchange=>"show_chart_by_neighborhood();" %>
+					Barrios
+			</div>
+			<div>
+				<%= check_box_tag "check_box_by_emergency_type", nil, nil, :onchange=>"show_chart_by_emergency_type();" %>
+				Tipos de emergencia
+			</div>
+			<div>
+				<%= check_box_tag "check_box_by_status", nil, nil, :onchange=>"show_chart_by_status();"%>
+					Estado
+			</div>
+		</div>
+		<div class="float_left" id="chart_by_neighborhood" style="display: none;">
+			<%= pie_chart Emergency.graph_by_emergency_neighborhood %>
+		</div>
+		<div class="float_left" id="chart_by_emergency_type" style="display: none;">
+			<%= pie_chart Emergency.graph_by_emergency_type %>
+		</div>
+		<div class="float_left" id="chart_by_status" style="display: none;">
+			<%= pie_chart Emergency.graph_by_status %>
+		</div>
+		<div class="clear"></div>
+</div>

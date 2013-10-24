@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	 <title>UpbEmergencies</title>
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <%= stylesheet_link_tag    "application", :media => "all" %>
+ 	  <%= javascript_include_tag "application" %>
+  	<%= csrf_meta_tags %>
+	</head>
+	<body>	
+		<script type="text/javascript">
+		  // This function is to display fqas answers
+			function show_answer(answer)
+			{
+			  $('document').ready(function(){
+			    $('#'+answer).toggle('blind');
+			  });
+			}
+
+			$('document').ready(function(){
+					height = $(document).height();
+					width = $(document).width();
+			    $('.modal-body').css("max-height",height-(height*0.46));
+			    $('.modal').css("margin-top",-height/2.9);
+			    $('.modal').css("margin-left",-width/3.1);
+			});
+		</script>			
+		<div class="navbar" style="min-width: 900px;">
+	    	<div class="navbar-inner">
+	    		<div class="nav-collapse collapse">
+	      			<ul style="margin-top: -27px;" class="nav li_navbar"><%= render :partial => 'partials/private_navbar' %></ul>
+	      			<div style="text-align: right; margin-top: 27px; font-size: 15px;">
+						<%= current_system_user.name + " " + current_system_user.last_name %>|
+						<a style="color: black;" href="<%= destroy_system_user_session_path %>">Cerrar Sesión</a>
+					</div>
+	      		</div>
+	    	</div>
+	  	</div>
+		<div style="min-width: 900px;">
+			<div class="container-fluid"><%= yield %></div>
+		</div> 
+		<hr>	
+		<footer style="min-width: 900px;">
+			<div style="width: 200px; padding-left: 43%; padding-top: 20px;"><strong>Powered by</strong></div>
+			<div style="width: 200px; padding-left: 42.5%;">
+				<%= link_to "http://www.antioquia.gov.co" do %>
+     			<%= image_tag 'logo.png', :class => 'logo_innventto', :size => "85x85"%>
+   			<% end %>
+			</div>
+			<div class="clear"></div>
+		</footer>		
+	</body>
+</html>

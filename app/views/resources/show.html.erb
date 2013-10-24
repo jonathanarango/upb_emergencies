@@ -1,0 +1,35 @@
+<div class="row-fluid">
+  <div class="span2"><%= render :partial => 'partials/taskbar', :locals => { :models => [ 'resources' ] }%></div>
+  <div class="span10">
+  <%= render :partial => 'partials/alerts' %>
+    <div class="section_content" style="margin-left: -15px;"><br>
+      <table class="display_table">
+        <!-- RESOURCE TYPE -->
+        <tr>
+          <td class="align_right"><label>Tipo de recurso:</label></td>
+          <td><%= @resources_type_name.name %></td>
+        </tr>
+        <!-- STATUS -->
+        <tr>
+          <td class="align_right"><label>Estado:</label></td>
+          <td><%= get_resource_status(@resource.status) %></td>
+        </tr>
+        <!-- SERIAL -->
+        <tr>
+          <td class="align_right"><label>Serial:</label></td>
+          <td><%= @resource.serial %></td>
+        </tr>
+	      <!-- EXPIRATION DATE -->
+	      <tr>
+	        <td class="align_right"><label>Fecha de vencimiento:</label></td>
+	        <td>
+	        	<% if !@resource.expiration_date.blank? %>
+	        		<%= l( @resource.expiration_date, :format=> '%d/%m/%Y') %>
+	        	<% end %>
+	        </td>
+	      </tr>
+      </table>
+    </div>
+  </div>
+</div>
+

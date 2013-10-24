@@ -1,0 +1,78 @@
+<script type="text/javascript">
+
+  $(function(){
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0);
+    var checkin = $('#deadline').datepicker({
+      onRender: function(date) {
+        return date.valueOf() < now.valueOf() ? 'disabled' : '';
+      }
+    }).on('changeDate', function(ev) {
+      checkin.hide();
+    }).data('datepicker');
+  })
+</script>
+<div class="row-fluid">
+  <div class="span2"><%= render :partial => 'partials/taskbar', :locals => { :models => [ 'resources' ] }%></div>
+  <div class="span10">
+    <%= render :partial => 'partials/alerts' %>
+     <% if @resource.errors.any? %>
+          <div class="alert alert-error" >
+          	<a class="close" data-dismiss="alert">×</a> 
+            <ul>
+	            <% @resource.errors.full_messages.each do |msg| %>
+	              <li><%= msg %></li>
+	            <% end %>
+            </ul>
+          </div>
+        <% end %>
+    <div class="section_content" style="margin-left: -15px;"><br>
+      <%= form_for(@resource, :html => { :class => "form-horizontal"} ) do |f| %>
+          <!-- RESOURCE TYPE -->
+          <div class="control-group">
+            <%= f.label "Tipo de recurso", :class => "control-label"  %>
+            <div class="controls">
+             <%= f.select :resources_types_id, @resources_types %>
+            </div>
+          </div>
+          <!-- STATUS -->
+          <div class="control-group">
+            <%= f.label "Estado", :class => "control-label"  %>
+            <div class="controls">
+              <%= f.select :status, Resource.status_options %>
+            </div>
+          </div>
+          <!-- SERIAL -->
+          <div class="control-group">
+            <%= f.label "Serial*", :class => "control-label"  %>
+            <div class="controls">
+              <%= f.text_field :serial %>
+            </div>
+          </div>
+          <!--  EXPIRATION DATE -->
+          <div class="control-group">
+            <%= f.label "Fecha de vencimiento", :class => "control-label"  %>
+            <div class="controls">
+               <div class="input-append date height_" id="deadline" data-date=<%= Date.today.strftime('%d/%m/%Y') %> data-date-format="dd/mm/yyyy">
+                <% if @resource.expiration_date.blank? %>
+                  <%= f.text_field :expiration_date, :readonly=> true, :class => 'span9', :size => '9', :format => '%d/%m/%Y' %>
+                <% else %>
+                  <%= f.text_field :expiration_date, :value => @resource.expiration_date.strftime('%d/%m/%Y'), :readonly=> true, :class => 'span9', :size => '9', :format => '%d/%m/%Y' %>
+                <% end %>
+                  <span class="add-on"><i class="icon-th"></i></span>
+              </div>
+              <span class="contol-label">dd/mm/yyyy</span>
+            </div>
+          </div>
+          <!-- BUTTONS -->
+          <div class="control-group">
+            <div class="controls">
+               <%= f.submit "Guardar", :disable_with => "Guardando...", :class => "btn btn-primary" %>
+            <input value="Cancelar" onclick="window.location='<%= resources_path %>';" class ="btn btn-inverse" type="button">
+            </div>
+          </div>
+        <% end %>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>

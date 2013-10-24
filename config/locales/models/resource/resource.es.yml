@@ -1,0 +1,7 @@
+es:
+  activerecord:
+    models:
+      resource: "Recurso"
+    attributes:
+      resource:
+        serial: "Serial"

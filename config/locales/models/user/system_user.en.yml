@@ -1,0 +1,17 @@
+es:
+  activerecord:
+    models:
+      system_user: "User"
+    attributes:
+      system_user:
+        login: "Nombre de usuario"
+        password: "Contraseña"
+        name: "Nombre"
+    errors:
+      messages:
+        blank: 'no puede estar vacío'
+        taken: 'ya esta en uso'
+        confirmation: 'no coincide'
+        too_short: 'debe tener al menos 5 caracteres'
+        not_a_number: "no es un numero"
+        empty: "no puede estar vacío"

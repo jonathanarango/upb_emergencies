@@ -1,0 +1,9 @@
+es:
+  activerecord:
+    models:
+      emergencies_user: "Recurso"
+    attributes:
+      emergencies_user:
+        name: "Nombre"
+        last_name: "Apellido"
+        cellphone: "Celular"

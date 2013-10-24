@@ -1,0 +1,55 @@
+<div class="row-fluid">
+  <div class="span2"><%= render :partial => 'partials/taskbar', :locals => { :models => [ 'system_users' ] }%></div>
+  <div class="span10">
+    <%= render :partial => 'partials/alerts' %>
+    <div class="section_content" style="margin-left: -15px;"><br>
+      <%= hidden_field_tag(:actual, @actual) %>
+      <% if !@system_users.blank? %>
+        <table  class="table-hover">
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Último ingreso</th>
+            <th>Acciones</th>
+          </tr>
+        <% @system_users.each do |system_user| %>
+          <tr>
+            <td><%= system_user.name %></td>
+            <td><%= system_user.last_name %></td>
+            <td><%= system_user.email %></td>
+            <td>
+              <% if !system_user.current_sign_in_at.blank? %>
+                <%= time_ago_in_words(system_user.current_sign_in_at) %>
+              <% else %>
+                El usuario no ha accedido al sistema
+              <% end %>
+            </td>
+            <td>
+            <!-- VIEW -->
+              <%= link_to system_user_path(system_user)  do %>
+                  <input value="Ver"  class ="btn btn-small btn-success" type="button">
+              <% end %>
+              <!-- EDIT -->
+              <% if ((['edit', 'update'].index(action_name) == nil and controller_name.eql? 'emergencies') or (['new','create','edit', 'update', 'show', 'index'].index(action_name) != nil and !controller_name.eql? 'emergencies'))%>
+                  <%= link_to edit_system_user_path(system_user)  do %>
+                      <input value="Editar"  class ="btn btn-small btn-warning" type="button">
+                  <% end %>
+              <% end %>
+              <!-- DELETE -->
+              <%= link_to system_user, :confirm => "¿Esta seguro de cancelar la emergencia?", :method => :delete do %>
+                  <input value="Eliminar"  class ="btn btn-small btn-danger" type="button">
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        </table>
+      <% else %>
+        <div>
+          <h2 class="no_results">No se encontraron usuarios del sistema</h2>
+        </div>
+      <% end %>
+    <br />
+  </div>
+</div>
+

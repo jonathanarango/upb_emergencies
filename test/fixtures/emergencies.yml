@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  comments: MyString
+  emergencies_types_id: 1
+  emergency_end: 2013-05-14 11:51:30
+  emergency_start: 2013-05-14 11:51:30
+  management_description: MyText
+  zones_id: 1
+
+two:
+  comments: MyString
+  emergencies_types_id: 1
+  emergency_end: 2013-05-14 11:51:30
+  emergency_start: 2013-05-14 11:51:30
+  management_description: MyText
+  zones_id: 1

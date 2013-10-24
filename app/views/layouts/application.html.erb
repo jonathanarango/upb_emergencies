@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	  <title>UpbEmergencies</title>
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <%= stylesheet_link_tag    "application", :media => "all" %>
+ 	  <%= javascript_include_tag "application" %>
+  	<%= csrf_meta_tags %>
+	</head>
+	<body>				
+		<div style="min-width: 900px;">
+			<div class="navbar float_left public-navbar" style="min-width: 900px;">
+			  <div class="navbar-inner">
+			    <div class="nav-collapse collapse">
+			      <ul class="nav li_navbar">
+			      	<li>
+			      		<div style="margin-top: 2px;">
+						  <%= image_tag 'logo.png', :size => "87x87"%>
+						</div>
+					</li>
+					<li style="padding-left: 17px;" class="<%= (controller.action_name == 'index' and controller.controller_name == 'home') ? 'active' : '' %>"><a href="/home/index">Inicio</a></li>
+			      	<li>
+			        <li class="<%= (controller.action_name == 'new' and controller_name == 'emergencies') ? 'active' : '' %>"><a href="/emergencies/new">Registrar</a>
+				    <li class="<%= ((controller.action_name == 'index' or controller.action_name == 'reported_emergency') and controller.controller_name == 'emergencies') ? 'active' : '' %>"><a href="<%= reported_emergency_path %>">Consultar emergencia</a>
+				    </li>
+			        <li class="<%= controller.action_name == 'upb_emergencies_about' ? 'active' : '' %>"><a href="/home/upb_emergencies_about">Acerca de</a></li>
+			        <li class="<%= controller.action_name == 'help' ? 'active' : '' %>"><a href="/home/help">Ayuda</a></li>
+			        <% if controller_name == "sessions" %>
+				        <li class="<%= controller_name == 'sessions' ? 'active' : '' %>">
+				        	<a href="/admin">Iniciar sesión</a>
+				        </li>
+			        <% end %>
+			      </ul>
+			    </div>
+			  </div>
+			</div>
+			<div class="container-fluid" style="padding-top: 100px;"><%= yield %></div>
+		</div>
+		<footer style="min-width: 900px;">
+			<div style="width: 200px; padding-left: 43%; padding-top: 20px;"><strong>Powered by</strong></div>
+			<div style="width: 200px; padding-left: 43%;">
+				<%= link_to "http://www.antioquia.gov.co" do %>
+     			<%= image_tag 'logo.png', :class => 'logo_innventto', :size => "85x85"%>
+   			<% end %>
+			</div>
+			<div class="clear"></div>
+		</footer>
+	</body>
+</html>

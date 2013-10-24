@@ -1,0 +1,62 @@
+<%= create_tooltip("#edit, #delete") %>
+<div class="row-fluid">
+  <div class="span2"><%= render :partial => 'partials/taskbar', :locals => { :models => [ 'system_users' ] }%></div>
+  <div class="span10">
+  <%= render :partial => 'partials/alerts' %>
+    <div class="section_content" style="margin-left: -15px;"><br>
+      <table class="display_table">
+        <!-- NAME -->
+        <tr>
+          <td class="align_right"><label>Nombre:</label></td>
+          <td><%= @emergencies_user.name %></td>
+        </tr>
+        <!-- LAST-NAME -->
+        <tr>
+          <td class="align_right"><label>Apellido:</label></td>
+          <td><%= @emergencies_user.last_name %></td>
+        </tr>
+        <!-- CELLPHONE -->
+        <tr>
+          <td class="align_right"><label>Celular:</label></td>
+          <td><%= @emergencies_user.cellphone %></td>
+        </tr>
+        <!-- PHONE -->
+        <tr>
+          <td class="align_right"><label>Teléfono:</label></td>
+          <td><%= @emergencies_user.phone %></td>
+        </tr>
+        <!-- ROLE -->
+        <tr>
+          <td class="align_right"><label>Rol:</label></td>
+          <td><%= @emergencies_user_role_name.name %></td>
+        </tr>
+        <!-- LEVEL -->
+        <tr>
+          <td class="align_right"><label>Nivel:</label></td>
+          <td><%= @emergencies_user.level %></td>
+        </tr>
+        <!-- ADDRESS -->
+        <tr>
+          <td class="align_right"><label>Dirección:</label></td>
+          <td><%= @emergencies_user.address %></td>
+        </tr>
+        <!-- CREATED AT -->
+        <tr>
+          <td class="align_right"><label>Fecha de creación:</label></td>
+          <td><%= l(@emergencies_user.created_at, :format => '%d/%m/%Y - %H:%M') %></td>
+        </tr>
+        <!-- EMERGENCY TYPES -->
+        <tr>
+          <td class="align_right"><label>Tipos de emergencia:</label></td>
+          <td>
+            <div>
+              <% @emergencies_user.emergencies_types.each do |et| %>
+                - <%= et.name %>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

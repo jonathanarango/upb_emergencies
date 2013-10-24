@@ -1,0 +1,7 @@
+es:
+  activerecord:
+    models:
+      resources_zone: "Recurso"
+    attributes:
+      resources_zone:
+        resource_id: "Tipo de recurso"

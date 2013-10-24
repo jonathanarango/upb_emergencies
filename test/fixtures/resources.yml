@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  resources_types_id: 1
+  status: MyString
+
+two:
+  resources_types_id: 1
+  status: MyString

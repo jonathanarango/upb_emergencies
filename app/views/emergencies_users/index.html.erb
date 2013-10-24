@@ -1,0 +1,66 @@
+<div class="row-fluid">
+  <% @model = @from_index == "true" ? 'emergencies' : 'system_users' %>
+  <div class="span2"><%= render :partial => 'partials/taskbar', :locals => { :models => [ @model ] }%></div>
+  <div class="span10">
+    <%= render :partial => 'partials/alerts' %>
+    <div class="section_content" style="margin-left: -15px;"><br>
+      <% if @emergency_id.blank? %>
+       <!-- FILTERS -->
+        <%= form_tag emergencies_users_path, :method => 'get', :class => 'form-search' do %>
+          <%= text_field_tag :name, params[:name], :placeholder => "Nombre", :class => 'span2'  %>
+          <%= text_field_tag :last_name, params[:last_name], :placeholder => "Apellido", :class => 'span2'  %>
+          <%= select_tag :roles_id, options_for_select(@roles, params[:roles_id]), { :prompt => "Rol", :class => 'span2'} %>
+          <%= select_tag :level, options_for_select(EmergenciesUser.level_options, params[:level]), { :prompt => "Nivel", :class => 'span2'} %>
+          <%= submit_tag "Buscar", :name => nil , :class => 'btn margin_top_5' %>
+        <% end %>
+      <% end %>
+      <% if !@emergency_id.blank? %>
+        <div style="margin-top:-10px;"><h4>Usuarios notificados</h4></div>
+      <% end %>
+      <% if !@emergencies_users.blank? %>
+        <table>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Rol</th>
+            <th>Celular</th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+
+          <% @emergencies_users.each do |emergencies_user| %>
+            <tr>
+              <td><%= emergencies_user.name %></td>
+              <td><%= emergencies_user.last_name %></td>
+              <% @emergencies_user_role_name = Role.find(emergencies_user.roles_id) %>
+              <td><%= @emergencies_user_role_name.name %></td>
+              <td><%= emergencies_user.cellphone %></td>
+              <td>
+                <% if @emergency_id.blank? %>
+                  <!-- VIEW -->
+                  <%= link_to emergencies_user_path(emergencies_user)  do %>
+                    <input value="Ver"  class ="btn btn-small btn-success" type="button">
+                  <% end %>
+                  <!-- EDIT -->
+                  <%= link_to edit_emergencies_user_path(emergencies_user) do %>
+                    <input value="Editar"  class ="btn btn-small btn-warning" type="button">
+                  <% end %>
+                  <!-- DELETE -->
+                  <%= link_to emergencies_user, :confirm => "¿Esta seguro de eliminar el usuario?", :method => :delete do %>
+                    <input value="Eliminar"  class ="btn btn-small btn-danger" type="button">
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% else %>
+        <div>
+          <h2 class="no_results">No se encontraron usuarios aptos para la emergencia</h2>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+

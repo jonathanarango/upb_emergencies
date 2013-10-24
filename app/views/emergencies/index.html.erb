@@ -1,0 +1,127 @@
+<script type="text/javascript">
+
+  function show_datapickers()
+  { 
+    date_id = $('#filter_kind').val();  
+    if (date_id == 1){
+      $('#datepicker_specific_date').show();
+      $('#datepicker_interval').hide();
+    }else{
+      if (date_id == 2){
+        $('#datepicker_interval').show();
+        $('#datepicker_specific_date').hide();
+      }else{
+        $('#datepicker_interval').hide();
+        $('#datepicker_specific_date').hide();
+      }
+      
+    }
+  }
+
+  $(function(){
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0);
+    var checkin = $('#deadline').datepicker({
+      onRender: function(date) {
+        return date.valueOf();
+      }
+    }).on('changeDate', function(ev) {
+      checkin.hide();
+    }).data('datepicker');
+  })
+
+  $(function(){
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var checkin = $('#start_date').datepicker({
+      format: 'dd/mm/yyyy',
+      onRender: function(date) {
+        return date.valueOf();
+      }
+    }).on('changeDate', function(ev) {
+        var newDate = new Date(ev.date)
+        newDate.setDate(newDate.getDate() + 1);
+        checkout.setValue(newDate);
+      checkin.hide();
+      checkout.show();
+      $('#end_date')[0].focus();
+    }).data('datepicker');
+    var checkout = $('#end_date').datepicker({
+      format: 'dd/mm/yyyy',
+      onRender: function(date) {
+        return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+      }
+    }).on('changeDate', function(ev) {
+      checkout.hide();
+    }).data('datepicker');
+  })
+
+</script>
+
+<div class="row-fluid">
+  <div class="span12">
+    <div style="margin-left: 7px; margin-right: -6px;">
+  	 <%= render :partial => 'partials/alerts' %>
+    </div>
+    <div class="section_content" style="margin-left: -8px; margin-right: -6px;"><br>
+     <!-- FILTERS -->
+      <%= form_tag emergencies_path, :method => 'get', :class => 'form-search' do %>
+      <%= hidden_field_tag(:actual, @actual) %>
+        <%= select_tag :emergency_type_id, options_for_select(@emergencies_types, params[:emergency_type_id]), { :prompt => "Tipo de emergencia", :class => 'span3'} %>
+        <%= select_tag :status, options_for_select(get_status, params[:status]), { :prompt => "Estado", :class => 'span2'} %>
+        <%= autocomplete_field_tag 'neighborhood_name', '', autocomplete_neighborhood_name_neighborhoods_path, :placeholder => "Barrio" %>
+        <%= text_field_tag :code, params[:code], :class=>"span2", :placeholder => "Código" %>
+        <%= submit_tag "Buscar", :name => nil , :class => 'btn margin_top_5' %>
+        <input type="button" value="Limpiar" onclick="window.location.href = '<%= emergencies_path %>'" class="btn btn-inverse" />
+      <% end %>
+    	<% if !@emergencies.blank? %>
+				<table  class="table-hover">
+				  <tr>
+				    <th>Tipo de emergencia</th>
+            <th>Estado</th>
+				    <th>Acciones</th>
+				  </tr>
+				<% @emergencies.each do |emergency| %>
+				  <tr>
+				    <td><%= emergency.emergency_type.name %></td>				    
+            <td><%= get_emergency_status(emergency.status) %></td>
+				    <td>
+				    	<% if @actual == "true" %>
+								<!-- END -->
+								<% if ((['edit', 'update'].index(action_name) == nil and controller_name.eql? 'emergencies') or (['new','create','edit', 'update', 'show', 'index'].index(action_name) != nil and !controller_name.eql? 'emergencies'))%>
+									<%= link_to edit_emergency_path(emergency, :actual => @actual)  do %>
+										<input value="Finalizar"  class ="btn btn-small btn-warning" type="button">
+									<% end %>
+								<% end %>
+								<!-- CANCEL -->
+								<%= link_to "/emergencies/cancel?emergency_id=#{emergency.id}&actual=#{@actual}", :confirm => "¿Esta seguro de cancelar la emergencia?" do %>
+									<input value="Cancelar"  class ="btn btn-small btn-danger" type="button">
+								<% end %>
+								<!-- VIEW NOTIFICATED USERS -->
+								<%= link_to emergencies_users_path(:emergency_id => emergency.id, :from_index => true) do %>
+									<input value="Ver usuarios notificados"  class ="btn btn-small btn-success" type="button">
+								<% end %>
+							<% else %>
+								<!-- END -->
+								<% if ((['edit', 'update'].index(action_name) == nil and controller_name.eql? 'emergencies') or (['new','create','edit', 'update', 'show', 'index'].index(action_name) != nil and !controller_name.eql? 'emergencies'))%>
+									<%= link_to emergency_path(emergency, :actual => @actual)  do %>
+										<input value="Ver"  class ="btn btn-small btn-warning" type="button">
+									<% end %>
+								<% end %>
+								<!-- CANCEL -->
+								<%= link_to emergency, :confirm => "¿Esta seguro de eliminar la emergencia?", :method => :delete   do %>
+									<input value="Eliminar"  class ="btn btn-small btn-danger" type="button">
+								<% end %>
+							<% end %>
+						</td>
+				  </tr>
+				<% end %>
+				</table>
+			<% else %>
+				<div>
+					<h2 class="no_results">No se encontraron emergencias</h2>
+				</div>
+			<% end %>
+			<br />
+	</div>
+</div>

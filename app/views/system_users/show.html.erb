@@ -1,0 +1,73 @@
+<%= create_tooltip("#edit, #delete") %>
+<div class="row-fluid">
+  <div class="span2"><%= render :partial => 'partials/taskbar', :locals => { :models => [ 'system_users' ] }%></div>
+  <div class="span10">
+  <%= render :partial => 'partials/alerts' %>
+    <div class="section_content" style="margin-left: -15px;"><br>
+      <table class="display_table">
+        <!-- NAME -->
+        <tr>
+          <td class="align_right"><label>Nombre:</label></td>
+          <td><%= @system_user.name %></td>
+        </tr>
+        <!-- LAST-NAME -->
+        <tr>
+          <td class="align_right"><label>Apellido:</label></td>
+          <td><%= @system_user.last_name %></td>
+        </tr>
+        <!-- EMAIL -->
+        <tr>
+          <td class="align_right"><label>Email:</label></td>
+          <td><%= @system_user.email %></td>
+        </tr>
+        <!-- PHONE -->
+        <tr>
+          <td class="align_right"><label>Teléfono:</label></td>
+          <td><%= @system_user.phone %></td>
+        </tr>
+        <!-- CELLPHONE -->
+        <tr>
+          <td class="align_right"><label>Celular:</label></td>
+          <td><%= @system_user.cellphone %></td>
+        </tr>
+        <!-- PASSWORD -->
+        <tr>
+          <td class="align_right"><label>Contraseña:</label></td>
+          <td>***********<%= link_to "Cambiar contraseña", "/system_users/password?id=#{@system_user.id}" %></td>
+        </tr>
+        <!-- CREATED AT -->
+        <tr>
+          <td class="align_right"><label>Fecha de creación:</label></td>
+          <td><%= l(@system_user.created_at, :format => '%d/%m/%Y - %H:%M') %></td>
+        </tr>
+        <!-- SIGN IN TIMES -->
+        <tr>
+          <td class="align_right"><label>Número de accesos:</label></td>
+          <td><%= @system_user.sign_in_count %></td>
+        </tr>
+        <!-- LAST SIGN IN TIME -->
+        <tr>
+          <td class="align_right"><label>Último acceso:</label></td>
+          <td>
+            <% if !@system_user.current_sign_in_at.blank? %>
+              <%= time_ago_in_words(@system_user.current_sign_in_at) %>
+            <% else %>
+              El usuario no ha accedido al sistema
+            <% end %>
+          </td>
+        </tr>
+        <% if @my_self_user == "true" %>
+          <tr>
+            <td class="align_right"><label></label></td>
+            <td>
+            <br>
+              <%= link_to edit_system_user_path(@system_user, :my_self_user => true)  do %>
+                <input value="Editar"  class ="btn btn-large btn-success" type="button"  >
+                <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>

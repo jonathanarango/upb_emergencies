@@ -1,0 +1,65 @@
+<div class="row-fluid">
+  <div class="span12">
+    <div style="margin-left: 7px; margin-right: -6px;">
+      <%= render :partial => 'partials/alerts' %>
+    </div>
+    <div class="section_content" style="margin-left: -8px; margin-right: -6px;"><br>
+    <% if @emergency.errors.any? %>
+          <div class="alert alert-error" >
+          	<a class="close" data-dismiss="alert">×</a> 
+            <ul>
+	            <% @emergency.errors.full_messages.each do |msg| %>
+	              <li><%= msg %></li>
+	            <% end %>
+            </ul>
+          </div>
+        <% end %>
+      <%= form_for(@emergency, :html => { :class => "form-horizontal"} ) do |f| %>
+          <!-- EMERGENCY TYPE -->
+          <div class="control-group">
+            <h4>Registro situación de emergencia</h4>
+          </div>
+          <div class="control-group">
+            <%= f.label "Tipo de emergencia", :class => "control-label"  %>
+            <div class="controls">
+              <%= f.select :emergency_type_id, @emergencies_types, :include_blank =>true %>
+            </div>
+          </div>
+          <!-- DESCRIPTION -->
+          <div class="control-group">
+            <%= f.label "Descripción de la emergencia", :class => "control-label"  %>
+            <div class="controls">
+              <%= f.text_area :description, :style=>"width: 500px; height: 100px; max-width: 1000px; max-height: 200px;" %>
+            </div>
+          </div>
+          <!-- COUNTRY -->
+           <div class="control-group">
+            <%= f.label "Localización", :class => "control-label"  %>
+            <div class="controls">
+              <div id="div_location_select">
+                <%= render :partial => 'partials/load_location' %>
+              </div>
+            </div>
+          </div>
+          <!-- DESCRIPTION DE UBUCACIÓN-->
+          <div id="location_description" style="display: none;">
+            <div class="control-group">
+              
+              <div class="controls">
+                <%= f.text_area :location_description, :style=>"width: 500px; height: 100px; max-width: 1000px; max-height: 200px;", :placeholder=>"Dirección específica y/o descripción de la ubicación" %>
+              </div>
+            </div>
+          </div>
+          <!-- BUTTONS -->
+          <div class="control-group">
+            <div class="controls">
+               <%= f.submit "Registrar", :disable_with => "Guardando...", :class => "btn btn-primary" %>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+
+
+

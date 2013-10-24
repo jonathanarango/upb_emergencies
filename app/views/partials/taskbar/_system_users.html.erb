@@ -1,0 +1,18 @@
+<%
+	controller_name = controller.controller_name
+	action_name = controller.action_name
+%>
+<li class="nav-header">Mi Cuenta</li> 
+<li class=<%= (controller_name.eql? 'system_users' and @my_self_user == "true" and ['show','edit'].index(action_name) != nil)? 'active' : '' %>>
+	<%= link_to '-'+ "Detalles de mi cuenta", system_user_path(current_system_user, :my_self_user => true) %>
+</li>
+<li class="divider"></li> 
+<li class="nav-header">Usuarios del sistema</li> 
+<li class=<%= (controller_name.eql? 'system_users' and ['new', 'create'].index(action_name) != nil)? 'active' : ''  %>>
+	<%= link_to '-'+ "Nuevo", new_system_user_path %>
+</li>
+<li class=<%= (controller_name.eql? 'system_users' and @my_self_user != "true" and ['index', 'edit', 'show', 'update'].index(action_name) != nil)? 'active' : ''  %>>
+	<%= link_to '-'+ "Existentes", system_users_path %>
+</li>
+
+

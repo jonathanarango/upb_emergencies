@@ -1,0 +1,45 @@
+<script type="text/javascript">
+
+	function change_location()
+	{
+		city_id = $('#city_id').val();
+
+		$.ajax(
+			{
+				url: "/locations/load_location?city_id=" + city_id,
+				type: "get",
+				dataType: "html",
+				success: function(data){ 
+					$('#div_location_select').html(data);
+				},
+				error: function(data){ 
+					alert("error");
+				}
+			}
+		);
+	}
+
+	function show_location_description()
+	{
+		$('#location_description').show();
+	}
+
+</script>
+<!-- CIUDADES -->
+<% if !@cities.blank? %>
+	<%=
+			select_tag :city_id,
+			options_from_collection_for_select(@cities, "id", "name", @city_id),
+			:prompt => "Municipio",
+			:onchange => 'change_location();'
+	%>
+<% end %>
+<!-- BARRIOS -->
+<% if !@neighborhoods.blank? %>
+	<%=
+			select_tag :neighborhood_id,
+			options_from_collection_for_select(@neighborhoods, "id", "name", @neighborhood_id),
+			:prompt => "Barrio",
+			:onchange => 'show_location_description();'
+	%>
+<% end %>

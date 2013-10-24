@@ -1,0 +1,39 @@
+<script type="text/javascript">
+
+function show_answer(answer)
+{
+	$('document').ready(function(){
+		$('#'+answer).toggle('blind');
+	});
+}
+
+</script>
+<div class="row-fluid">
+	<div style="width: 100%;">
+		<div class="section_content">
+			<div style="margin-top:-10px;"><h4>Preguntas frecuentes</h4></div>
+			<hr>
+			<div style="padding-top: 20px;" class="back_ground_faqs">
+				<div style="padding-left: 20px; padding-bottom: 10px; margin-top: -10px;"><a href="#" onclick="show_answer('answer_1');"><strong style=" color: #086404;">¿Cómo registro una situación de emergencia?</strong>&nbsp<b class="caret" style="margin-top: 10px;"></b></a></div>
+				<div id="answer_1" class="display_none" style="padding: 0px 20px 20px 20px;">
+					<hr>
+					Lo único que debes hacer para registrar tu situación de emergencia de orden público es ingresar a la pestaña “Registrar” en donde te aparecerá un formulario con unos campos obligatorios y sencillos acerca de tu emergencia. Tendrás que tener en cuenta el tipo de la emergencia, una breve descripción para las autoridades competentes y la ubicación de manera general o muy específica de la emergencia. Finalmente el sistema te entregará un código que es muy importante para que posteriormente des un seguimiento adecuado a lo que acabas de denunciar.
+				</div>
+			</div>
+			<div style="padding-top: 20px;" class="back_ground_faqs">
+				<div style="padding-left: 20px; padding-bottom: 10px; margin-top: -10px;"><a href="#" onclick="show_answer('answer_2');"><strong style=" color: #086404;">¿De qué manera consulto la situación de emergencia que previamente registré?</strong>&nbsp<b class="caret" style="margin-top: 10px;"></b></a></div>
+				<div id="answer_2" class="display_none" style="padding: 0px 20px 20px 20px;">
+					<hr>
+					Cuando registraste tu emergencia, el sistema te dio un código único que es lo único que necesitas para consultar el estado de tu emergencia. Ingresa en la pestaña “Consultar” y allí podrás digitar tu código y buscar tu denuncia.
+				</div>
+			</div>
+			<div style="padding-top: 20px;" class="back_ground_faqs">
+				<div style="padding-left: 20px; padding-bottom: 10px; margin-top: -10px;"><a href="#" onclick="show_answer('answer_3');"><strong style=" color: #086404;">¿Qué hago si he perdido el código de la emergencia?</strong>&nbsp<b class="caret" style="margin-top: 10px;"></b></a></div>
+				<div id="answer_3" class="display_none" style="padding: 0px 20px 20px 20px;">
+					<hr>
+					El aplicativo es muy riguroso respecto a este código ya que Antioquia Preventiva provee un sistema anónimo, en donde este código es el único mecanismo para saber que tú fuiste quien registro esa emergencia y evitar que cualquier persona pueda conocer datos de cualquier emergencia. Si necesitas saber el estado de tu denuncia y has perdido tu código, te invitamos a comunicarte a los centros de atención de las autoridades respectivas.
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

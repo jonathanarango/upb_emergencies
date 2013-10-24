@@ -1,0 +1,44 @@
+<div class="align_middle" >
+	<div style="padding-bottom: 10px;"><h4>Iniciar sesión</h4></div>
+	<%= render :partial => 'partials/alerts' %>
+	<% if !devise_error_messages!.blank? %>
+		<div class="alert alert-error">
+				<a class="close" data-dismiss="alert">×</a>  
+				<%= devise_error_messages! %>	
+		</div>
+	<% end %>
+	<div class="section_content padding_center_20"><br>
+		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+			<!-- EMAIL -->
+				<div class="control-group">
+				    <%= f.label "Email"+'*', :class => "control-label"  %>
+				    <div class="controls">
+				    	<%= f.email_field :email, :class => 'span3' %>
+				    </div>
+			  </div>
+		  <!-- PASSWORD -->
+				<div class="control-group">
+				  <%= f.label "Contraseña"+'*', :class => "control-label"  %>
+				  <div class="controls">
+			    	<%= f.password_field :password, :class => 'span3' %>
+			    </div>
+			  </div>
+			<div class="controls">
+				<label class="checkbox">
+				  <% if devise_mapping.rememberable? %>
+				    <%= f.check_box :remember_me %><%= f.label "Recordarme" %>
+				  <% end %>
+				</label>
+			</div>
+			<br>
+		  <div class="clear"></div>
+		  <!-- BUTTONS -->
+			<div class="control-group">
+		    <div class="controls">
+	  			<%= f.submit "Iniciar sesión", :class => "btn btn-primary" %>
+	  		</div>
+	  	</div>
+		<% end %>
+		<%= render "devise/shared/links" %>
+	</div>
+</div>

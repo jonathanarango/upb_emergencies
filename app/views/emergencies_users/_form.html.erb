@@ -1,0 +1,95 @@
+<div class="row-fluid">
+  <div class="span2"><%= render :partial => 'partials/taskbar', :locals => { :models => [ 'system_users' ] }%></div>
+  <div class="span10">
+    <%= render :partial => 'partials/alerts' %>
+    <% if @emergencies_user.errors.any? %>
+          <div class="alert alert-error" >
+          	<a class="close" data-dismiss="alert">×</a> 
+            <ul>
+	            <% @emergencies_user.errors.full_messages.each do |msg| %>
+	              <li><%= msg %></li>
+	            <% end %>
+            </ul>
+          </div>
+        <% end %>
+    <div class="section_content" style="margin-left: -15px;"><br>
+      <%= form_for(@emergencies_user, :html => { :class => "form-horizontal"} ) do |f| %>
+        <!-- NAME -->
+        <div class="control-group">
+            <%= f.label "Nombre"+'*', :class => "control-label"  %>
+            <div class="controls">
+              <%= f.text_field :name, :class => 'span3' %>
+            </div>
+        </div>
+        <!-- LAST-NAME -->
+        <div class="control-group">
+            <%= f.label "Apellido"+'*', :class => "control-label"  %>
+            <div class="controls">
+              <%= f.text_field :last_name, :class => 'span3' %>
+            </div>
+        </div>
+        <!-- CELLPHONE -->
+        <div class="control-group">
+            <%= f.label "Celular"+"*", :class => "control-label"  %>
+            <div class="controls">
+              <%= f.text_field :cellphone, :class => 'span3' %>
+            </div>
+        </div>
+        <!-- PHONE -->
+        <div class="control-group">
+            <%= f.label "Teléfono", :class => "control-label"  %>
+            <div class="controls">
+              <%= f.text_field :phone, :class => 'span3' %>
+            </div>
+        </div>
+        <!-- ADDRESS -->
+        <div class="control-group">
+            <%= f.label "Dirección", :class => "control-label"  %>
+            <div class="controls">
+              <%= f.text_field :address, :class => 'span3' %>
+            </div>
+        </div>
+         <!-- ROLE -->
+        <div class="control-group">
+            <%= f.label "Rol", :class => "control-label"  %>
+            <div class="controls">
+              <%= f.select :roles_id, @roles %>
+            </div>
+        </div>
+        <!-- LEVEL -->
+        <div class="control-group">
+            <%= f.label "Nivel", :class => "control-label"  %>
+            <div class="controls">
+              <%= f.select :level, @levels %>
+            </div>
+        </div>
+         <!-- EMERGENCY TYPES -->
+        <div class="control-group" >
+          <%= f.label "Tipos de emergencia", :class => "control-label"  %>
+          <div class="controls" >
+            <% if !@emergency_types.blank? %>
+              <% @emergency_types.each do |rt| %>
+                <div>
+                  <%= check_box_tag "emergencies_user[emergencies_type_ids][]", rt.id, @emergencies_user.emergencies_types.include?(rt) %>
+                  <%= rt.name %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <!-- BUTTONS -->
+        <div class="control-group">
+          <div class="controls">
+             <%= f.submit "Guardar", :disable_with => "Guardando...", :class => "btn btn-primary" %>
+          <input value="Cancelar" onclick="window.location='<%= system_users_path %>';" class ="btn btn-inverse" type="button">
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+
+
+
+

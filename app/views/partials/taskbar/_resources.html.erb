@@ -1,0 +1,19 @@
+<%
+	controller_name = controller.controller_name
+	action_name = controller.action_name
+%>
+<li class="nav-header">Recursos</li>
+<li class=<%= (controller_name.eql? 'resources' and ['new', 'create'].index(action_name) != nil)? 'active' : ''  %>>
+	<%= link_to '-'+ "Nuevo", new_resource_path %>
+</li>
+<li class=<%= (controller_name.eql? 'resources' and ['index', 'edit', 'show', 'update'].index(action_name) != nil)? 'active' : ''  %>>
+	<%= link_to '-'+ "Existentes", resources_path %>
+</li>
+<li class="divider"></li> 
+<li class="nav-header">Recursos por zona</li> 
+<li class=<%= (controller_name.eql? 'resources_zones' and ['new', 'create'].index(action_name) != nil)? 'active' : ''  %>>
+	<%= link_to '-'+ "Nuevo", new_resources_zone_path %>
+</li>
+<li class=<%= (controller_name.eql? 'resources_zones' and ['index', 'edit', 'show', 'update'].index(action_name) != nil)? 'active' : ''  %>>
+	<%= link_to '-'+ "Existentes", resources_zones_path %>
+</li>

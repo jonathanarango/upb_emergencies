@@ -1,0 +1,11 @@
+<%
+	controller_name = controller.controller_name
+	action_name = controller.action_name
+%>
+<li class="nav-header">Emergencias</li> 
+<li class=<%= ((!@emergency_id.blank? and @from_index == "true") or (controller_name.eql? 'emergencies' and @actual == "true" and ['index', 'edit', 'show', 'update'].index(action_name) != nil))? 'active' : ''  %>>
+	<%= link_to '-'+ "Existentes", emergencies_path(:actual=> true) %>
+</li>
+<li class=<%= (controller_name.eql? 'emergencies' and @actual != "true" and ['index', 'edit', 'show', 'update'].index(action_name) != nil)? 'active' : ''  %>>
+	<%= link_to '-'+ "Historial", emergencies_path(:actual=> false) %>
+</li>
